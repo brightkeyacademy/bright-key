@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* 1. Logo (Text removed, Image enlarged while maintaining navbar height) */}
         <Link href="/" className="relative z-[110] flex items-center">
           <Image 
-            src="/brightkey.jpg" 
+            src="/brightkey.png" 
             alt="Bright Key Logo" 
             width={300} 
             height={100} 

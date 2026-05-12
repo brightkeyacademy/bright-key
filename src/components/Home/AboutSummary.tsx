@@ -14,7 +14,7 @@ export default function AboutSummary() {
   ];
 
   const bentoItems = [
-    { id: 1, type: "logo", src: "/brightkey.jpg", alt: "Bright Key Logo", style: "col-span-2 md:col-span-2 row-span-1 bg-white" },
+    { id: 1, type: "logo", src: "/brightkey.png", alt: "Bright Key Logo", style: "col-span-2 md:col-span-2 row-span-1 bg-white" },
     { id: 2, type: "image", src: "/about/about-2.jpg", alt: "Construction Project", style: "col-span-1 md:col-span-1 row-span-1" },
     { id: 3, type: "image", src: "/about/about-3.jpg", alt: "Education & Learning", style: "col-span-1 md:col-span-1 row-span-1" },
     { id: 4, type: "image", src: "/about/about-1.jpg", alt: "Bright Key Professional Team", style: "col-span-2 md:col-span-2 row-span-2" },

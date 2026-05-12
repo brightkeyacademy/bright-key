@@ -51,7 +51,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center mb-8 group">
               <div className="relative flex-shrink-0">
                 <Image 
-                  src="/brightkey.jpg" 
+                  src="/brightkey.png" 
                   alt="Bright Key Logo" 
                   width={400} 
                   height={150} 
