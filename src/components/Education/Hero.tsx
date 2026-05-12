@@ -1,12 +1,10 @@
 "use client";
 
-import { motion, Variants } from "framer-motion"; // Added 'Variants' import
-import { ArrowRight, Globe, PlaneTakeoff, ShieldCheck } from "lucide-react";
-import Image from "next/image";
+import { motion, Variants } from "framer-motion";
+import { ArrowRight, Globe, ShieldCheck, MapPin, Navigation } from "lucide-react";
 import Link from "next/link";
 
 export default function AcademyHero() {
-  // Added strict Variants type and cast the ease array
   const fadeUpVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
@@ -15,13 +13,23 @@ export default function AcademyHero() {
       transition: {
         delay: i * 0.15,
         duration: 0.8,
-        ease: [0.2, 0.65, 0.3, 1] as [number, number, number, number], // Strict 4-value array cast
+        ease: [0.2, 0.65, 0.3, 1] as [number, number, number, number],
       },
     }),
   };
 
+  // Smooth floating animation settings for high performance
+  const floatAnimation = (delay: number) => ({
+    y: [0, -12, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: delay
+    }
+  });
+
   return (
-    // FIX: Removed 'py-8' which was conflicting. Changed mobile pt to 'pt-36' for better gap. Desktop kept exactly as 'md:pt-40'.
     <section className="relative w-full min-h-[100dvh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#fafcff] pt-36 pb-16 md:pt-40 md:pb-24"> 
       {/* Soft Animated Background Mesh */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -30,16 +38,10 @@ export default function AcademyHero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-16 relative z-10 w-full">
-        {/* MOBILE FIX: Removed 'order-x' classes. 
-          By default (mobile), Text is first, Image is second.
-          On lg screens (desktop), it automatically splits into 2 columns.
-        */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center">
           
-          {/* ===================== TEXT COLUMN (Top on Mobile, Left on Desktop) ===================== */}
+          {/* ===================== TEXT COLUMN ===================== */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left z-20">
-            
-            {/* Animated Badge */}
             <motion.div
               custom={0}
               initial="hidden"
@@ -54,13 +56,12 @@ export default function AcademyHero() {
               2026 Intakes Are Now Open
             </motion.div>
 
-            {/* Main Heading (Responsive sizing) */}
             <motion.h1
               custom={1}
               initial="hidden"
               animate="visible"
               variants={fadeUpVariants}
-              className="text-[2.5rem] sm:text-5xl lg:text-6xl xl:text-[4rem] font-extrabold tracking-tight text-slate-900 mb-5 sm:mb-6 leading-[1.15] sm:leading-[1.15]"
+              className="text-[2.5rem] sm:text-5xl lg:text-6xl xl:text-[4rem] font-extrabold tracking-tight text-slate-900 mb-5 sm:mb-6 leading-[1.15]"
             >
               Take Your Next Step. <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
@@ -68,7 +69,6 @@ export default function AcademyHero() {
               </span>
             </motion.h1>
 
-            {/* Subtitle */}
             <motion.p
               custom={2}
               initial="hidden"
@@ -84,87 +84,108 @@ export default function AcademyHero() {
               initial="hidden"
               animate="visible"
               variants={fadeUpVariants}
-              // Mobile wala w-full deela CTA eke wage size eka haduwa. sm:w-auto nisa desktop wenas wenne na.
               className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto px-2 sm:px-0"
             >
-              <button className="group w-full sm:w-auto px-7 sm:px-7 py-4 sm:py-3.5 bg-slate-900 text-white rounded-full font-bold flex items-center justify-center gap-2 hover:bg-blue-600 transition-all duration-300 active:scale-95 shadow-lg shadow-slate-900/20 text-[15px] sm:text-sm">
+              <button className="group w-full sm:w-auto px-7 py-4 bg-slate-900 text-white rounded-full font-bold flex items-center justify-center gap-2 hover:bg-blue-600 transition-all duration-300 active:scale-95 shadow-lg text-[15px] sm:text-sm">
                 Explore Universities
-                <Globe className="w-[18px] h-[18px] sm:w-4 sm:h-4 group-hover:rotate-12 transition-transform" />
+                <Globe className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               </button>
               
               <Link href="/contact" className="w-full sm:w-auto">
-                <button className="group w-full sm:w-auto px-7 sm:px-7 py-4 sm:py-3.5 bg-white text-slate-800 border border-slate-200 rounded-full font-bold flex items-center justify-center gap-2 hover:border-blue-300 hover:text-blue-600 hover:bg-slate-50 transition-all duration-300 active:scale-95 shadow-sm text-[15px] sm:text-sm">
+                <button className="group w-full sm:w-auto px-7 py-4 bg-white text-slate-800 border border-slate-200 rounded-full font-bold flex items-center justify-center gap-2 hover:border-blue-300 hover:text-blue-600 transition-all duration-300 active:scale-95 shadow-sm text-[15px] sm:text-sm">
                   Talk to an Advisor
-                  <ArrowRight className="w-[18px] h-[18px] sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
             </motion.div>
           </div>
 
-          {/* ===================== IMAGE COLLAGE (Desktop Layout Unchanged) ===================== */}
+          {/* ===================== MAP SECTION (Optimized for Mobile) ===================== */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="relative w-full h-[350px] sm:h-[450px] lg:h-[600px] flex items-center justify-center z-10"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative w-full flex items-center justify-center z-10"
           >
-            {/* Main Big Image (Background) */}
-            <div className="absolute right-0 lg:right-0 w-[90%] lg:w-[85%] h-[100%] lg:h-[90%] rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
-              <div className="absolute inset-0 bg-blue-900/10 z-10 mix-blend-overlay"></div>
-              {/* Main Photo (Students/Korean Campus) */}
-              <Image 
-                src="/education/hero-1.jpg" 
-                alt="Students in South Korea" 
-                fill 
-                className="object-cover"
-                priority
+            <div className="relative w-full max-w-[500px] lg:max-w-[700px] mx-auto overflow-visible">
+              
+              {/* Map Image - Fixes Aspect Ratio for SVG Sync */}
+              <img 
+                src="/world-map.png" 
+                alt="World Map" 
+                className="w-full h-auto opacity-30 mix-blend-multiply pointer-events-none select-none transform-gpu" 
               />
+
+              {/* Responsive SVG Path */}
+              <svg 
+                className="absolute inset-0 w-full h-full pointer-events-none z-10" 
+                viewBox="0 0 100 100" 
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="flightGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.1" />
+                    <stop offset="50%" stopColor="#2563eb" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="1" />
+                  </linearGradient>
+                </defs>
+                <motion.path 
+                  d="M 65 55 Q 72.5 40 80 50" 
+                  fill="none" 
+                  stroke="url(#flightGlow)" 
+                  strokeWidth="0.8"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </svg>
+
+              {/* Sri Lanka Icon */}
+              <div className="absolute left-[65%] top-[55%] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="absolute w-8 h-8 bg-blue-500/20 rounded-full animate-ping" />
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+              </div>
+
+              {/* South Korea Icon */}
+              <div className="absolute left-[80%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="absolute w-8 h-8 bg-cyan-500/20 rounded-full animate-ping" />
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+              </div>
+
+              {/* Smooth Floating Card 1 - GPU Accelerated */}
+              <motion.div 
+                animate={floatAnimation(0)}
+                className="absolute top-[0%] left-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
+              >
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs font-extrabold text-slate-900 leading-none">100% Success</p>
+                  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1">Visa Guaranteed</p>
+                </div>
+              </motion.div>
+
+              {/* Smooth Floating Card 2 - GPU Accelerated */}
+              <motion.div 
+                animate={floatAnimation(0.5)}
+                className="absolute bottom-[5%] right-[-5%] sm:right-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
+              >
+                <div className="text-right">
+                  <p className="text-xs font-extrabold text-slate-900 leading-none">Direct Route</p>
+                  <p className="text-[9px] font-bold text-blue-600 uppercase tracking-widest mt-1">Top Universities</p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <Navigation className="w-4 h-4" />
+                </div>
+              </motion.div>
+
             </div>
-
-            {/* Smaller Overlapping Image (Bottom Left) */}
-            <motion.div 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-0 bottom-[5%] lg:bottom-[10%] w-[50%] lg:w-[30%] h-[30%] rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden shadow-xl border-4 border-white z-20 hidden sm:block"
-            >
-              <Image 
-                src="/education/logoedu.png" 
-                alt="Korean Campus" 
-                fill 
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* Floating Glass Card - Success Rate */}
-            <motion.div 
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-[5%] lg:top-[15%] left-[0%] lg:left-[5%] z-30 bg-white/95 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-xl border border-white flex items-center gap-2 sm:gap-3"
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-              <div className="text-left">
-                <p className="text-[10px] sm:text-xs font-extrabold text-slate-900">100% Guaranteed</p>
-                <p className="text-[8px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider">Visa Success</p>
-              </div>
-            </motion.div>
-
-            {/* Floating Glass Card - Flight/Travel */}
-            <motion.div 
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute bottom-[10%] lg:bottom-[25%] right-[-2%] lg:right-[-5%] z-30 bg-white/95 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-xl border border-white flex items-center gap-2 sm:gap-3"
-            >
-              <div className="text-right hidden sm:block">
-                <p className="text-[10px] sm:text-xs font-extrabold text-slate-900">Direct Flights</p>
-                <p className="text-[8px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wider">To Seoul</p>
-              </div>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                <PlaneTakeoff className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-            </motion.div>
-
           </motion.div>
 
         </div>

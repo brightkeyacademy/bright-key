@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image"; // Image component added
+import Image from "next/image";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,21 +38,16 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
         
-        {/* 1. Logo + Text (No sizes changed, just added the image) */}
-        <Link href="/" className="relative z-[110] flex items-center gap-2">
+        {/* 1. Logo (Text removed, Image enlarged while maintaining navbar height) */}
+        <Link href="/" className="relative z-[110] flex items-center">
           <Image 
             src="/brightkey.jpg" 
             alt="Bright Key Logo" 
-            width={40} // Cute small size 
-            height={40} 
-            className="w-12 h-12 md:w-12 md:h-12 rounded-md object-contain"
+            width={300} 
+            height={100} 
+            priority
+            className="h-18 md:h-18 w-auto object-contain rounded-md"
           />
-          <motion.span 
-            className="text-xl md:text-2xl font-black tracking-tighter text-slate-900"
-            whileHover={{ scale: 1.02 }}
-          >
-            BRIGHT<span className="text-blue-600">KEY.</span>
-          </motion.span>
         </Link>
 
         {/* 2. Desktop Links (Cute & Compact) */}

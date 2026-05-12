@@ -47,23 +47,25 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="flex flex-col items-start lg:col-span-4 lg:pr-8"
           >
-            {/* Logo + Text */}
-            <Link href="/" className="inline-flex items-center gap-2 mb-6">
-              <Image 
-                src="/brightkey.jpg" 
-                alt="Bright Key Logo" 
-                width={60} 
-                height={60} 
-                className="w-12 h-12 md:w-14 md:h-14 rounded-md object-contain"
-              />
-              <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-                Bright <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Key.</span>
-              </span>
+            {/* Enlarged Logo Only */}
+            <Link href="/" className="flex items-center mb-8 group">
+              <div className="relative flex-shrink-0">
+                <Image 
+                  src="/brightkey.jpg" 
+                  alt="Bright Key Logo" 
+                  width={400} 
+                  height={150} 
+                  priority
+                  className="h-24 sm:h-32 w-auto object-contain rounded-md transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </Link>
+            
             <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-sm">
               Delivering unparalleled excellence across cutting-edge Construction solutions and world-class Education services. Your future, our foundation.
             </p>
-            {/* Social Icons (Twitter replaced with TikTok) */}
+
+            {/* Social Icons */}
             <div className="flex items-center gap-3">
               {[FacebookIcon, InstagramIcon, TiktokIcon, LinkedinIcon].map((Icon, i) => (
                 <a key={i} href="#" className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-500 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 hover:-translate-y-1 transition-all duration-300">
