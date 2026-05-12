@@ -18,13 +18,13 @@ export default function AcademyHero() {
     }),
   };
 
-  // Smooth floating animation settings for high performance
+  // Fixed floatAnimation with explicit types for ease
   const floatAnimation = (delay: number) => ({
     y: [0, -12, 0],
     transition: {
       duration: 4,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: "easeInOut" as const, // Added 'as const' to fix the string type error
       delay: delay
     }
   });
@@ -100,7 +100,7 @@ export default function AcademyHero() {
             </motion.div>
           </div>
 
-          {/* ===================== MAP SECTION (Optimized for Mobile) ===================== */}
+          {/* ===================== MAP SECTION (Right Column) ===================== */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -109,7 +109,7 @@ export default function AcademyHero() {
           >
             <div className="relative w-full max-w-[500px] lg:max-w-[700px] mx-auto overflow-visible">
               
-              {/* Map Image - Fixes Aspect Ratio for SVG Sync */}
+              {/* Map Image */}
               <img 
                 src="/world-map.png" 
                 alt="World Map" 
@@ -157,7 +157,7 @@ export default function AcademyHero() {
                 </div>
               </div>
 
-              {/* Smooth Floating Card 1 - GPU Accelerated */}
+              {/* Floating Card 1 */}
               <motion.div 
                 animate={floatAnimation(0)}
                 className="absolute top-[0%] left-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
@@ -171,7 +171,7 @@ export default function AcademyHero() {
                 </div>
               </motion.div>
 
-              {/* Smooth Floating Card 2 - GPU Accelerated */}
+              {/* Floating Card 2 */}
               <motion.div 
                 animate={floatAnimation(0.5)}
                 className="absolute bottom-[5%] right-[-5%] sm:right-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
