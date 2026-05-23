@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, Variants } from "framer-motion"; // Make sure Variants is imported
-import { Compass, BookOpen, MapPin, ArrowRight, ShieldCheck, Languages } from "lucide-react";
-import Image from "next/image";
+import { motion, Variants } from "framer-motion";
+import { Compass, ArrowRight, ShieldCheck, MapPin, Navigation } from "lucide-react";
 import Link from "next/link";
 
 export default function AcademyAbout() {
@@ -19,60 +18,19 @@ export default function AcademyAbout() {
     }),
   };
 
-  // FIX: Added 'Variants' type and 'as const' to the ease string
-  const floatVariants: Variants = {
-    animate: (i: number) => ({
-      y: [0, i % 2 === 0 ? -12 : 12, 0],
-      transition: {
-        duration: 4 + i,
-        repeat: Infinity,
-        ease: "easeInOut" as const, // Strict type cast to fix the error
-      }
-    })
-  };
-
-  // Content for the 4 floating cards
-  const features = [
-    {
-      id: 1,
-      icon: MapPin,
-      title: "Exclusive Network",
-      desc: "Direct partnerships with top-tier South Korean universities.",
-      color: "text-blue-600",
-      bg: "bg-blue-100/50",
-      position: "top-[5%] left-[-10%]", // Desktop position
-    },
-    {
-      id: 2,
-      icon: ShieldCheck,
-      title: "100% Visa Success",
-      desc: "Proven track record with transparent documentation.",
-      color: "text-emerald-600",
-      bg: "bg-emerald-100/50",
-      position: "top-[15%] right-[-15%]", // Desktop position
-    },
-    {
-      id: 3,
-      icon: Languages,
-      title: "TOPIK Mastery",
-      desc: "Comprehensive Korean language preparation.",
-      color: "text-violet-600",
-      bg: "bg-violet-100/50",
-      position: "bottom-[20%] left-[-15%]", // Desktop position
-    },
-    {
-      id: 4,
-      icon: BookOpen,
-      title: "Expert Mentorship",
-      desc: "End-to-end guidance from application to landing.",
-      color: "text-cyan-600",
-      bg: "bg-cyan-100/50",
-      position: "bottom-[5%] right-[-10%]", // Desktop position
+  // Fixed floatAnimation with explicit types for ease
+  const floatAnimation = (delay: number) => ({
+    y: [0, -12, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut" as const, // Added 'as const' to fix the string type error
+      delay: delay
     }
-  ];
+  });
 
   return (
-    <section className="relative w-full py-20 md:py-32 bg-white overflow-hidden">
+    <section className="relative w-full py-20 md:py-28 bg-white overflow-hidden">
       
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
@@ -85,7 +43,7 @@ export default function AcademyAbout() {
             ========================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-center">
           
-          {/* 1. LEFT COLUMN: Text Content */}
+          {/* ===================== LEFT COLUMN: Text Content ===================== */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left order-1">
             
             <motion.div
@@ -140,79 +98,96 @@ export default function AcademyAbout() {
             </motion.div>
           </div>
 
-          {/* 2. RIGHT COLUMN: Visuals (Image + Floating Cards) */}
-          <div className="relative flex flex-col items-center justify-center order-2 w-full mt-10 lg:mt-0">
-            
-            {/* The Main Transparent Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              // drop-shadow eken transparent image eka lassanata pop wela penawa
-              className="relative w-[80%] max-w-[350px] aspect-[3/4] sm:aspect-[4/5] z-10 drop-shadow-[0_20px_50px_rgba(37,99,235,0.15)]"
-            >
-              <Image 
-                src="/education/about-tall.png" 
-                alt="Student success" 
-                fill 
-                className="object-contain"
+          {/* ===================== MAP SECTION (Right Column) ===================== */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative flex flex-col items-center justify-center order-2 w-full mt-10 lg:mt-0 z-10"
+          >
+            <div className="relative w-full max-w-[500px] lg:max-w-[700px] mx-auto overflow-visible">
+              
+              {/* Map Image */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/world-map.png" 
+                alt="World Map" 
+                className="w-full h-auto opacity-30 mix-blend-multiply pointer-events-none select-none transform-gpu" 
               />
-            </motion.div>
 
-            {/* =========================================================
-                DESKTOP FLOATING CARDS (Hidden on Mobile)
-                ========================================================= */}
-            <div className="hidden lg:block absolute inset-0 w-full h-full z-20 pointer-events-none">
-              {features.map((feature, i) => (
-                <motion.div
-                  key={feature.id}
-                  custom={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+              {/* Responsive SVG Path */}
+              <svg 
+                className="absolute inset-0 w-full h-full pointer-events-none z-10" 
+                viewBox="0 0 100 100" 
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="flightGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.1" />
+                    <stop offset="50%" stopColor="#2563eb" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="1" />
+                  </linearGradient>
+                </defs>
+                <motion.path 
+                  d="M 65 55 Q 72.5 40 80 50" 
+                  fill="none" 
+                  stroke="url(#flightGlow)" 
+                  strokeWidth="0.8"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  whileInView={{ pathLength: 1 }}
                   viewport={{ once: true }}
-                  variants={floatVariants}
-                  animate="animate"
-                  className={`absolute ${feature.position} bg-white/70 backdrop-blur-xl border border-white/80 p-4 rounded-2xl shadow-xl shadow-blue-900/5 w-[220px] pointer-events-auto hover:bg-white hover:scale-105 transition-all duration-300 cursor-default`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${feature.bg} ${feature.color}`}>
-                      <feature.icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900 mb-0.5 leading-tight">{feature.title}</h4>
-                      <p className="text-[10px] text-slate-500 font-medium leading-snug">{feature.desc}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </svg>
 
-            {/* =========================================================
-                MOBILE GRID (Hidden on Desktop)
-                ========================================================= */}
-            <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mt-8 relative z-20">
-              {features.map((feature, i) => (
-                <motion.div
-                  key={feature.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-slate-50 border border-slate-100 p-4 rounded-2xl flex items-center gap-4 shadow-sm"
-                >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${feature.bg} ${feature.color}`}>
-                    <feature.icon className="w-5 h-5" />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="text-sm font-bold text-slate-900 mb-0.5">{feature.title}</h4>
-                    <p className="text-[11px] text-slate-500 font-medium leading-tight">{feature.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+              {/* Sri Lanka Icon */}
+              <div className="absolute left-[65%] top-[55%] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="absolute w-8 h-8 bg-blue-500/20 rounded-full animate-ping" />
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+              </div>
 
-          </div>
+              {/* South Korea Icon */}
+              <div className="absolute left-[80%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="absolute w-8 h-8 bg-cyan-500/20 rounded-full animate-ping" />
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white shadow-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+              </div>
+
+              {/* Floating Card 1 */}
+              <motion.div 
+                animate={floatAnimation(0)}
+                className="absolute top-[0%] left-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
+              >
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs font-extrabold text-slate-900 leading-none">100% Success</p>
+                  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1">Visa Guaranteed</p>
+                </div>
+              </motion.div>
+
+              {/* Floating Card 2 */}
+              <motion.div 
+                animate={floatAnimation(0.5)}
+                className="absolute bottom-[5%] right-[-5%] sm:right-[0%] z-30 bg-white/90 backdrop-blur-xl px-4 py-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-3 transform-gpu will-change-transform"
+              >
+                <div className="text-right">
+                  <p className="text-xs font-extrabold text-slate-900 leading-none">Direct Route</p>
+                  <p className="text-[9px] font-bold text-blue-600 uppercase tracking-widest mt-1">Top Universities</p>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <Navigation className="w-4 h-4" />
+                </div>
+              </motion.div>
+
+            </div>
+          </motion.div>
 
         </div>
       </div>

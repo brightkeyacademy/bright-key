@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Partners() {
-  // Update these logos in your public/partners/ folder. 
-  // Tip: Use transparent .png files for the best look!
   const partners = [
     { id: 1, name: "Daegu Arts University", logo: "/partners/logo-1.png" },
     { id: 2, name: "Seoul Tech Institute", logo: "/partners/logo-2.png" },
@@ -13,7 +11,9 @@ export default function Partners() {
   ];
 
   return (
-    <section className="relative w-full py-8 pb-16 md:pb-18 bg-[#fafcff] flex justify-center z-20">
+    // Background eka soft blue gradient ekak kala. 
+    // Hero eke black eken passe meka penne "Wow" kiyana widiyata.
+    <section className="relative w-full py-14 md:py-24 pb-16 md:pb-18 bg-gradient-to-b from-[#f0f4ff] to-[#f8faff] flex justify-center z-20">
  
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
@@ -31,7 +31,6 @@ export default function Partners() {
                 initial={{ opacity: 0, x: -15 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                // Mobile eke text eka thawa poddama poddak loku kala (text-xs)
                 className="text-xs md:text-xs font-black tracking-[0.2em] text-blue-600 uppercase mb-1 drop-shadow-sm"
               >
                 Trusted By
@@ -40,7 +39,6 @@ export default function Partners() {
                 initial={{ opacity: 0, x: -15 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                // Mobile eke text eka thawa poddama poddak loku kala (text-lg sm:text-xl)
                 className="text-lg sm:text-xl md:text-xl font-bold text-slate-800"
               >
                 Top Universities in South Korea
@@ -48,7 +46,6 @@ export default function Partners() {
             </div>
 
             {/* ================= Divider Line ================= */}
-            {/* Modern Glowy Divider */}
             <motion.div 
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
@@ -67,16 +64,13 @@ export default function Partners() {
                   transition={{
                     duration: 0.7,
                     delay: 0.5 + (index * 0.15),
-                    ease: [0.16, 1, 0.3, 1] // Super smooth reveal
+                    ease: [0.16, 1, 0.3, 1] 
                   }}
-                  whileHover={{ scale: 1.1, y: -4 }} // More pronounced magnetic hover
-                  // Advanced Grayscale & Color Reveal
+                  whileHover={{ scale: 1.1, y: -4 }} 
                   className="relative group/logo cursor-pointer flex items-center justify-center grayscale-[90%] opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-400"
                 >
-                  {/* Subtle Logo Hover Glow */}
                   <div className="absolute inset-0 bg-blue-400/10 blur-xl rounded-full opacity-0 group-hover/logo:opacity-100 transition-opacity duration-400 -z-10" />
 
-                  {/* Logo Wrapper - Kept the cute original sizes */}
                   <div className="relative h-10 sm:h-12 w-28 sm:w-36 drop-shadow-sm group-hover/logo:drop-shadow-lg transition-all duration-400">
                     <Image
                       src={partner.logo}
@@ -94,3 +88,4 @@ export default function Partners() {
     </section>
   );
 }
+
