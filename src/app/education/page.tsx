@@ -9,6 +9,7 @@ import WhyTrustUs from "@/components/Education/WhyTrustUs";
 import Universities from "@/components/Education/Universities";
 import AcademyStats from "@/components/Education/AcademyStats";
 import AcademyCTA from "@/components/Education/AcademyCTA";
+import Testimonials from "@/components/Education/Testimonials";
 
 
 export default function EducationPage() {
@@ -19,10 +20,11 @@ export default function EducationPage() {
       <Partners />
       <AboutAcademy />
       <AcademyFeatures />
+      <Universities />
       <VisionMission />
       <WhyTrustUs />
       <AcademyStats />
-      <Universities />
+      <Testimonials />
       <AcademyCTA />
       <Footer />
     </main>

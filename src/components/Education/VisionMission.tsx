@@ -38,7 +38,7 @@ export default function VisionMission() {
   return (
     <section className="relative w-full pt-12 md:pt-16 pb-20 md:pb-32 bg-white overflow-hidden flex justify-center z-20">
       
-      <div className="max-w-7xl mx-auto px-6 py-10 sm:px-10 lg:px-16 w-full relative z-10">
+      <div className="max-w-7xl mx-auto px-6 py-6 sm:px-10 lg:px-16 w-full relative z-10">
         
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">

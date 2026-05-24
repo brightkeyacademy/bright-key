@@ -43,7 +43,7 @@ export default function AcademyFeatures() {
   const featuresRight = [features[1], features[3]];
 
   return (
-    <section className="relative w-full py-16 md:py-24 bg-white overflow-hidden flex justify-center">
+    <section className="relative w-full py-12 md:py-20 bg-white overflow-hidden flex justify-center">
       <div className="w-[95%] max-w-6xl relative z-10">
         
         {/* Main Layout Container */}
